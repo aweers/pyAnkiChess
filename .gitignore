@@ -3,3 +3,4 @@ env
 pgns/
 *.svg
 *.apkg
+__pycache__/
