@@ -7,6 +7,7 @@ import chess.svg
 parser = argparse.ArgumentParser()
 parser.add_argument("pgn", help="PGN file")
 parser.add_argument("-b", "--black", help="Play from blacks perspective", action="store_true")
+parser.add_argument("-s", "--size", help="Size of output", type=int, default=300)
 args = parser.parse_args()
 
 if(not os.path.exists(args.pgn)):
@@ -21,7 +22,8 @@ def printBoard(game, output="./studyMove3.svg"):
     svg_image = chess.svg.board(
         game.board(),
         orientation=ORIENTATION,
-        lastmove=game.move
+        lastmove=game.move,
+        size=args.size
     )
     with open(output, "w") as f:
         f.write(svg_image)
