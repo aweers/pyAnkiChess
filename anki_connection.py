@@ -4,17 +4,19 @@ class AnkiChessNote(genanki.Note):
     @property
     def guid(self):
         # use move history
-        return genanki.guid_for(self.fields[3])
+        return genanki.guid_for(self.fields[0], self.fields[3])
 
 class AnkiChessConnection:
     # Unique for this model
     MODEL_GUID = 1238229309
     DECK_GUID = 2104873761
 
-    def __init__(self, deck_name, title):
+    def __init__(self, deck_name, title = "", avoid_duplicates=False):
         self.deck_name = deck_name
         self.title = title
         self.deck = genanki.Deck(AnkiChessConnection.DECK_GUID, deck_name)
+        self.avoid_duplicates = avoid_duplicates
+        self.added_cards = set()
         self.model = genanki.Model(
             AnkiChessConnection.MODEL_GUID,
             'Simple Model',
@@ -44,10 +46,15 @@ class AnkiChessConnection:
                 move_history,
                 url
             ])
-        self.deck.add_note(note)
+        if not note.guid in self.added_cards:
+            self.deck.add_note(note)
+            self.added_cards.add(note.guid)
 
     def savePackage(self, output):
         genanki.Package(self.deck).write_to_file(output)
+
+    def setTitle(self, new_title):
+        self.title = new_title
 
 anki = AnkiChessConnection("Chess opening", "Vienna Gambit")
 
