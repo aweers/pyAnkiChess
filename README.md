@@ -25,5 +25,5 @@ python pyAnkiChess.py -d "Vienna opening" -o vienna.apkg pgns/vienna_opening.pgn
 ```
 - Use lichess study (URL: https://lichess.org/study/El9igr12). Note that only public studies are supported. 
 ```bash
-python pyAnkiChess.py -d "London system" -o vienna.apkg El9igr12
+python pyAnkiChess.py -d "London system" -o london.apkg El9igr12
 ```
